@@ -6,6 +6,7 @@ const db = {};
 db.mongoose = mongoose;
 db.user = require("./user");
 db.role = require("./role");
-db.book = require("./book")
+db.book = require("./book");
+db.review = require("./review");
 
 module.exports = db;

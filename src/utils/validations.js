@@ -48,11 +48,17 @@ exports.createBookValidator = [
     .trim()
     .notEmpty()
     .withMessage("Description cannot be empty")
-    .isIn(genreEnum).withMessage("Genre is not availbale"),
+    .isIn(genreEnum)
+    .withMessage("Genre is not availbale"),
   body("publishedDate")
     .notEmpty()
     .withMessage("Published Date cannot be empty")
     .matches(/^\d{4}\/\d{2}\/\d{2}$/)
     .withMessage("Published Date must be in yyyy/mm/dd format")
     .custom(dateValidation),
+];
+
+exports.reviewValidator = [
+  body("comment").trim().notEmpty().withMessage("Comment cannot be empty"),
+  body("rating").trim().notEmpty().withMessage("Rating cannot be empty"),
 ];
