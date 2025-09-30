@@ -12,7 +12,7 @@ exports.signup = async (req, res) => {
     const password = bcrypt.hashSync(req.body.password, 8);
 
     const errors = validationResult(req);
-    if (errors?.errors?.length > 0) {
+    if (!errors.isEmpty()) {
       return res.send({ message: errors?.errors[0]?.msg });
     }
 

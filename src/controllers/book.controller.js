@@ -11,7 +11,7 @@ exports.createBook = async (req, res) => {
 
     const errors = validationResult(req);
 
-    if (errors.errors.length > 0) {
+    if (!errors.isEmpty()) {
       res.status(400).send({
         message: errors.errors[0].msg,
       });
