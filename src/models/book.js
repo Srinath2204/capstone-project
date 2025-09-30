@@ -10,12 +10,7 @@ const Book = mongoose.model(
       genre: String,
       publishedDate: Number,
       description: String,
-    //   review: [
-    //     {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       ref: "Review",
-    //     },
-    //   ],
+      createdBy: String
     },
     {
       timestamps: true,

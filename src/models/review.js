@@ -7,7 +7,7 @@ const Review = mongoose.model(
   new mongoose.Schema({
     comment: String,
     rating: Number,
-    bookId: { type: mongoose.Schema.Types.ObjectId, ref: "Book",},
+    bookId: { type: mongoose.Schema.Types.ObjectId, ref: "Book"},
     userId: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
   })
 );

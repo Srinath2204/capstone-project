@@ -1,5 +1,7 @@
 const config = require("../config/auth.config");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const Role = require("../models/role");
+const User = require("../models/user");
 
 
 const verifyToken = (req, res, next) => {
@@ -14,12 +16,41 @@ const verifyToken = (req, res, next) => {
                 return res.status(403).send({message : "Unauthorized request"})
             }
             req.userId = decoded.id;
+            req.role = decoded.role;
             next();
         })
     }
 }
 
+const isAdmin = async (req, res, next) => {
+    try {
+        const userRole = await Role.findById(req.role);
+        if(userRole.name === 'Admin'){
+            next();
+        }
+        else{
+            res.send({message: 'Unauthenticated : Admin role is required'})
+        }
+    } catch (error) {
+        res.status(500).send({message: `${error}`})
+    }
+}
+
+const isUser = async (req, res, next) => {
+    try {
+        const userRole = await Role.findById(req.role);
+        if(userRole.name === 'User'){
+            next();
+        }
+        else{
+            res.send({message: 'Unauthenticated : User role is required'})
+        }
+    } catch (error) {
+        res.status(500).send({message: `${error}`})
+    }
+}
+
 const authJwt = {
-  verifyToken
+  verifyToken, isAdmin, isUser
 };
 module.exports = authJwt;
