@@ -1,17 +1,17 @@
-const bookController = require("../controllers/book.controller");
+const controller = require("../controllers/review.controller");
 const router = require("express").Router();
 const { reviewValidator } = require("../utils/validations");
 const authJwt = require("../middlewares/authJWT");
 
 module.exports = app => {
     
-    router.post('/:id/reviews', [authJwt.verifyToken], reviewValidator, bookController.addReview);
+    router.post('/:id/reviews', [authJwt.verifyToken], reviewValidator, controller.addReview);
 
-    router.delete('/review/:id', [authJwt.verifyToken], bookController.deleteReview);
+    router.delete('/review/:id', [authJwt.verifyToken], controller.deleteReview);
 
-    router.get('/reviews', [authJwt.verifyToken, authJwt.isAdmin], bookController.getReviews);
+    router.get('/reviews', [authJwt.verifyToken, authJwt.isAdmin], controller.getReviews);
 
-    router.get('/books/:bookId/reviews', [authJwt.verifyToken], bookController.getBookReviews);
+    router.get('/books/:bookId/reviews', [authJwt.verifyToken], controller.getBookReviews);
 
     app.use('/api/v1', router);
 }
