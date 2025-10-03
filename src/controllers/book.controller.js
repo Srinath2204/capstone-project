@@ -42,7 +42,7 @@ exports.getAllBooks = async (req, res) => {
       : {};
 
     const books = await Book.find(condition);
-    res.send(books);
+    return res.status(201).send(books);
   } catch (error) {
     res.status(500).send({
       message: error.message || "Error in fetching books",

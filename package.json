@@ -4,7 +4,8 @@
   "description": "capstone-project for books store",
   "main": "server.js",
   "scripts": {
-    "test": "mocha ./src/tests/*.spec.js"
+    "test": "mocha ./src/tests/*.spec.js",
+    "test:debug": "node --inspect-brk ./node_modules/mocha/bin/mocha.js ./src/tests/*.spec.js"
   },
   "author": "",
   "license": "ISC",
