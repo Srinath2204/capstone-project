@@ -107,17 +107,3 @@ exports.deleteBook = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
-
-exports.getUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    if (!users) {
-      return res.status(404).send({ message: "No users found" });
-    }
-    return res.status(200).send(users);
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: error.message || "Error in fetching users" });
-  }
-};

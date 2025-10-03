@@ -43,6 +43,7 @@ setInitialRolesInDB();
 require("./src/routes/auth.routes")(app);
 require("./src/routes/book.routes")(app);
 require("./src/routes/review.routes")(app);
+require("./src/routes/admin.routes")(app);
 
 const PORT = process.env.port || 3000;
 app.listen(PORT, () => {

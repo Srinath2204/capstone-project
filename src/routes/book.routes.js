@@ -12,7 +12,5 @@ module.exports = app => {
 
     router.put('/books/:id', [authJwt.verifyToken], bookController.editBook)
 
-    router.get('/admin/users', [authJwt.verifyToken, authJwt.isAdmin], bookController.getUsers);
-
     app.use('/api/v1', router);
 }
