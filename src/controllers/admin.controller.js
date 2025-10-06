@@ -28,10 +28,8 @@ exports.deleteUser = async (req, res) => {
 
     const userRole = await Role.findById(user.role);
 
-    if(userRole.name === 'Admin'){
-        return res
-        .status(404)
-        .send({ message: `Cannot delete Admin role` });
+    if (userRole.name === "Admin") {
+      return res.status(404).send({ message: `Cannot delete Admin role` });
     }
 
     const isUserDeleted = await User.findByIdAndDelete(userId);
@@ -52,7 +50,9 @@ exports.editUser = async (req, res) => {
     const userId = req.params.id;
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).send({ message: `No user found with ID ${userId}` });
+      return res
+        .status(404)
+        .send({ message: `No user found with ID ${userId}` });
     }
     const isUserUpdated = await Book.findByIdAndUpdate(userId, req.body);
     if (!isUserUpdated) {

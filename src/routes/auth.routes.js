@@ -1,5 +1,6 @@
 const authController = require("../controllers/auth.controller");
-const { verifySignupValidation } = require("../utils/signupValidation")
+const { verifySignupValidation } = require("../utils/signupValidation");
+const { passwordValidation } = require("../utils/passwordValidator");
 
 module.exports = app => {
     const router = require("express").Router();
@@ -11,7 +12,7 @@ module.exports = app => {
         next();
     })
 
-    router.post('/signup', verifySignupValidation, authController.signup);
+    router.post('/signup', [verifySignupValidation, passwordValidation], authController.signup);
 
     router.post('/signin', authController.signin);
 

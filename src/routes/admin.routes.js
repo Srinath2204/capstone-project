@@ -7,7 +7,7 @@ module.exports = app => {
 
     router.delete('/users/:id', [authJwt.verifyToken, authJwt.isAdmin], adminController.deleteUser);
 
-    router.put('/books/:id', [authJwt.verifyToken, authJwt.isAdmin], adminController.editUser)
+    router.put('/users/:id', [authJwt.verifyToken, authJwt.isAdmin], adminController.editUser)
 
     app.use('/api/v1/admin', router);
 }

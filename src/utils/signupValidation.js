@@ -20,5 +20,4 @@ const checkDuplicateUserEmail = async (email) => {
 exports.verifySignupValidation = [
     body('userName').trim().notEmpty().withMessage("Username cannot be empty").custom(checkDuplicateUserName),
     body('email').trim().notEmpty().withMessage("Email cannot be empty").isEmail().custom(checkDuplicateUserEmail),
-    body('password').trim().notEmpty().withMessage("Password cannot be empty")
 ]
