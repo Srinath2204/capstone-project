@@ -4,7 +4,11 @@ const User = db.user;
 const Role = db.role;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config");
+
+const config = process.env.secret;
+
+    console.log("22222222", process.env.secret, config)
+
 
 exports.signup = async (req, res) => {
   try {
@@ -45,6 +49,7 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   try {
+    console.log("111111111", process.env.secret, config)
     const user = await User.findOne({ userName: req.body.userName });
     if (!user) {
       return res.status(404).send({ message: "User not found" });
@@ -55,7 +60,7 @@ exports.signin = async (req, res) => {
     }
 
     const role = await Role.findById(user.role);
-    const token = jwt.sign({ id: user.id, role : user.role }, config.secret, {
+    const token = jwt.sign({ id: user.id, role : user.role }, config, {
       algorithm: "HS256",
       allowInsecureKeySizes: true,
       expiresIn: 3600,

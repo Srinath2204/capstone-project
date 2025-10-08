@@ -6,6 +6,8 @@ const Role = db.role;
 
 const app = express();
 
+global.__basedir = __dirname;
+require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -44,6 +46,7 @@ require("./src/routes/auth.routes")(app);
 require("./src/routes/book.routes")(app);
 require("./src/routes/review.routes")(app);
 require("./src/routes/admin.routes")(app);
+require("./src/routes/file.routes")(app);
 
 const PORT = process.env.port || 3000;
 app.listen(PORT, () => {
