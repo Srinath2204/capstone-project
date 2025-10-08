@@ -7,12 +7,7 @@ const upload = async (req, res) => {
     try {
         if(!req.file){
             res.status(400).send({message : "Please upload a file"})
-        }
-        const bookId = req.params.bookId;
-        const book = await Book.findById(bookId);
-        if(!book){
-            res.status(404).send({message: `Book with ID ${bookId} is not found`})
-        }
+        }        
         res.status(200).send({message : "File uploaded successfully"})
     } catch (error) {
         res
@@ -23,8 +18,8 @@ const upload = async (req, res) => {
 
 const getFiles = async (req, res) => {
     try {
-        const directoryPath = __basedir + "/uploads/";
-        fs.readdir(directoryPath, function(files, err){
+        const directoryPath = __basedir + "/src/uploads/";
+        fs.readdir(directoryPath, function(err, files){
             if(err){
                 res.status(500).send({message : err })
             }
@@ -35,6 +30,7 @@ const getFiles = async (req, res) => {
                     base_url : baseUrl + file
                 })
             });
+            res.status(200).send({message : "Files fetched successfully", files})
         })
     } catch (error) {
         res
@@ -45,9 +41,9 @@ const getFiles = async (req, res) => {
 
 const download = async (req, res) => {
     try {
-        const fileName = req.params.name;
+        const fileName = req.params.fileName;
         const bookId = req.params.bookId;
-        const directoryPath = __basedir + `/src/uploads/${bookId}`;
+        const directoryPath = __basedir + `/src/uploads/${bookId}/`;
 
         res.download(directoryPath + fileName, fileName, (err) => {
             if(err){

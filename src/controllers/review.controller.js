@@ -51,7 +51,7 @@ exports.deleteReview = async (req, res) => {
     }
     const userRole = await Role.findById(req.role);
 
-    if (userRole?.name === "Admin" || req.id === review.userId.toString()) {
+    if (userRole?.name === "Admin" || req.userId === review.userId.toString()) {
       const isDeleted = await Review.findByIdAndDelete(reviewId);
       if (isDeleted) {
         return res.status(200).send({

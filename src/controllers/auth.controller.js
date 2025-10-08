@@ -7,9 +7,6 @@ const jwt = require("jsonwebtoken");
 
 const config = process.env.secret;
 
-    console.log("22222222", process.env.secret, config)
-
-
 exports.signup = async (req, res) => {
   try {
     const { email, userName, role} = req.body;
@@ -49,7 +46,6 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   try {
-    console.log("111111111", process.env.secret, config)
     const user = await User.findOne({ userName: req.body.userName });
     if (!user) {
       return res.status(404).send({ message: "User not found" });

@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const Role = require("../models/role");
 const User = require("../models/user");
 
+const secret = process.env.secret;
+
 
 const verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
@@ -11,7 +13,7 @@ const verifyToken = (req, res, next) => {
         res.status(403).send({messagee : "Please provide token"})
     }
     else{
-        jwt.verify(token, config.secret, (err, decoded) => {
+        jwt.verify(token, secret, (err, decoded) => {
             if(err){
                 return res.status(403).send({message : "Unauthorized request"})
             }
