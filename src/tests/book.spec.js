@@ -11,11 +11,19 @@ const sandbox = sinon.createSandbox();
 
 let bookController = rewire("../controllers/book.controller");
 
+const redisMock = require("redis-mock");
+
 describe("test/book", () => {
   let sampleBook;
   let findStub;
   let findOneStub;
   let findOneAndUpdateStub;
+  let redisStub;
+
+  const redisClientMock = {
+    get: sinon.stub(),
+    set: sinon.stub(),
+  };
 
   beforeEach(() => {
     (sampleBook = {
@@ -31,6 +39,8 @@ describe("test/book", () => {
     findOneAndUpdateStub = sandbox
       .stub(mongoose.Model, "findOneAndUpdate")
       .resolves(sampleBook);
+
+    bookController.__set__("redisClient", redisClientMock);
   });
 
   afterEach(() => {
@@ -57,6 +67,9 @@ describe("test/book", () => {
         };
         const req = mockRequest({});
         const res = mockResponse();
+
+        redisClientMock.get.resolves(null);
+        redisClientMock.set.resolves("OK");
         await bookController.getAllBooks(req, res);
 
         expect(res.status.calledWith(201)).to.be.true;
@@ -64,13 +77,11 @@ describe("test/book", () => {
         const booksSent = res.send.getCall(0).args[0];
 
         expect(booksSent).to.deep.equal([sampleBook]);
-
       } catch (error) {
         throw new Error(error || "Unexpected failure!");
       }
     });
   });
-
 
   // describe("Create a book", () => {
   //     const mockReq = (options) => {

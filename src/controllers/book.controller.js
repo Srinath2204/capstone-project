@@ -3,7 +3,8 @@ const db = require("../models");
 const Book = db.book;
 const Review = db.review;
 const Role = db.role;
-const User = db.user;
+
+const  { redisClient } = require("../utils/redisClient");
 
 exports.createBook = async (req, res) => {
   try {
@@ -41,8 +42,17 @@ exports.getAllBooks = async (req, res) => {
       ? { title: { $regex: new RegExp(title), $options: "i" } }
       : {};
 
-    const books = await Book.find(condition);
-    return res.status(201).send(books);
+    if(!title){
+      const cachedBooks = await redisClient.get("allBooks");
+      if(!cachedBooks){
+        let books;
+        books = await Book.find(condition);
+        await redisClient.set("allBooks", JSON.stringify(books));
+        return res.status(201).send(books);
+      }
+      const books = JSON.parse(cachedBooks);
+      return res.status(201).send(books);
+    }
   } catch (error) {
     res.status(500).send({
       message: error.message || "Error in fetching books",

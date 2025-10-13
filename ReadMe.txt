@@ -1,0 +1,1 @@
+curl --location 'http://localhost:3000/api/auth/signup' --header 'Content-Type: application/json' --data-raw '{"userName": "Laxman","email": "Laxman@email.com","password": "Laxman@12","role": "User"}'

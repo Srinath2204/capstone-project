@@ -3,8 +3,14 @@ const dbConfig = require("./src/config/db.config");
 const db = require("./src/models");
 const Role = db.role;
 
-
 const app = express();
+
+const { connectRedis } = require("./src/utils/redisClient");
+
+const connectRedisDB = async () => {
+  await connectRedis();
+}
+connectRedisDB();
 
 global.__basedir = __dirname;
 require('dotenv').config();
